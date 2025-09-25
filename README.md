@@ -28,10 +28,13 @@ streamlit run tracker.py
 ```
 ### Usage
 
-Enter the stock ticker, date of investment, and the amount invested in GDP.
-To track another stock for your portfolio, click "➕ Add Another Investment"
-Click "Track Portfolio" to calculate current profit/loss and visualize performance.
-Use ❌ buttons next to rows to remove any investment to stop tracking it.
+1.   Enter the stock ticker, date of investment, and the amount invested in GDP.
+
+2.   To track another stock for your portfolio, click "➕ Add Another Investment"
+   
+3.   Click "Track Portfolio" to calculate current profit/loss and visualize performance.
+  
+4.   Use ❌ buttons next to rows to remove any investment to stop tracking it.
 
 ### Future Additions
 
