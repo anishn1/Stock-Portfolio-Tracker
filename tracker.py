@@ -45,7 +45,10 @@ if st.button("Track Portfolio"):
         currVal = shares * latestPrice
         profit = currVal - investment
         portfolioRes.append({"Ticker": ticker, "Invested Amount": investment, "Date Invested": date, "Shares": shares, "Current Value": currVal, "Profit/Loss": profit})
-        portfolioDF[ticker] =  data["Close"] * shares
+        portfolio_series =  data["Close"] * shares
+        portfolio_series.name = ticker
+        portfolioDF = pd.concat([portfolioDF, portfolio_series], axis=1)
+        portfolioDF = portfolioDF.groupby(portfolioDF.columns, axis=1).sum()
     
     if portfolioRes:
         resultsDF = pd.DataFrame(portfolioRes)
