@@ -22,6 +22,16 @@ for i, row in enumerate(st.session_state.rows):
 def addRow():
     st.session_state.rows.append({"ticker": "", "date": datetime.date.today() , "investment": 0.0})
 
+def toGBP(amount, currency):
+    if currency == "GBP":
+        return amount
+    exchName = f"{currency}GBP=X"
+    exchangeData = yf.download(exchName, period="1d")
+    rate = exchangeData["Close"].iloc[-1].item()
+    return amount * rate
+
+
+
 st.button("➕ Add Another Investment", on_click=addRow)
 
 if st.button("Track Portfolio"):
@@ -38,14 +48,24 @@ if st.button("Track Portfolio"):
         if data.empty:
             st.warning(f"No data found for {ticker} from {date}. Skipped.")
             continue
+        info = yf.Ticker(ticker).info
+        currency = info.get("currency", "GBP")
 
         startPrice = float(data["Close"].iloc[0].item())
         latestPrice = float(data["Close"].iloc[-1].item())
-        shares = investment/startPrice
+        startPriceGBP = startPrice
+        if not currency == "GBP":
+            startPriceGBP = toGBP(startPriceGBP, currency)
+        shares = investment/startPriceGBP
         currVal = shares * latestPrice
-        profit = currVal - investment
-        portfolioRes.append({"Ticker": ticker, "Invested Amount": investment, "Date Invested": date, "Shares": shares, "Current Value": currVal, "Profit/Loss": profit})
+        currValgbp = currVal
+        if not currency == "GBP":
+            currValgbp = toGBP(currVal, currency)
+        profit = currValgbp - investment
+        portfolioRes.append({"Ticker": ticker, "Invested Amount": investment, "Date Invested": date, "Shares": shares, "Current Value": currValgbp, "Profit/Loss": profit})
         portfolio_series =  data["Close"] * shares
+        if not currency == "GBP":
+            portfolio_series = toGBP(portfolio_series, currency)
         portfolio_series.name = ticker
         portfolioDF = pd.concat([portfolioDF, portfolio_series], axis=1)
         portfolioDF = portfolioDF.groupby(portfolioDF.columns, axis=1).sum()
