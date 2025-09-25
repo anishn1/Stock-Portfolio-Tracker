@@ -31,7 +31,14 @@ if st.button("Track Portfolio"):
         ticker = row["ticker"]
         date = row["date"]
         investment = row["investment"]
+        if not ticker:
+            st.warning("Please enter a ticker.")
+            continue
         data = yf.download(ticker, start=date, auto_adjust=False)
+        if data.empty:
+            st.warning(f"No data found for {ticker} from {date}. Skipped.")
+            continue
+
         startPrice = float(data["Close"].iloc[0].item())
         latestPrice = float(data["Close"].iloc[-1].item())
         shares = investment/startPrice
