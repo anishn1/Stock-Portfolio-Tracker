@@ -5,9 +5,14 @@ import matplotlib.pyplot as plt
 
 st.title("Stock Portfolio Tracker")
 
-ticker = st.text_input("Enter Stock Ticker (e.g. AAPL, MSFT)").upper()
-date = st.date_input("Investment Date")
-investment = st.number_input("Initial Investment (£)", min_value=0.0, value=1000.0)
+
+col1, col2, col3 = st.columns([3, 3, 3])
+with col1:
+    ticker = st.text_input("Enter Stock Ticker (e.g. AAPL, MSFT)").upper()
+with col2:
+    date = st.date_input("Investment Date")
+with col3:
+    investment = st.number_input("Initial Investment (£)", min_value=0.0, value=1000.0)
 
 if st.button("Track Portfolio"):
     data = yf.download(ticker, start=date)
