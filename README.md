@@ -8,7 +8,7 @@ Features:
 - Tracks current value and profits for each investment
 - Built using Streamlit for responsive web interface
 
-  ### Installation
+### Installation
 
 Clone repository
 ```bash
@@ -26,3 +26,15 @@ Run application
 ```bash
 streamlit run tracker.py
 ```
+### Usage
+
+Enter the stock ticker, date of investment, and the amount invested in GDP.
+To track another stock for your portfolio, click "➕ Add Another Investment"
+Click "Track Portfolio" to calculate current profit/loss and visualize performance.
+Use ❌ buttons next to rows to remove any investment to stop tracking it.
+
+### Future Additions
+
+- Store investments in database using SQL so user does not have to retype in new sessions
+- Candlestick chart type for performance visualisation
+
