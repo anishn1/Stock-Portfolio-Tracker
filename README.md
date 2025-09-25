@@ -1,11 +1,11 @@
 # Stock-Portfolio-Tracker
 
-A Python/Streamlit web application for tracking stock portfolios and visualising its performance over time to calculate overall returns, though the Yahoo Finance API.
+A Python/Streamlit web application for tracking stock portfolios and visualising its performance over time to calculate overall returns, through the Yahoo Finance API.
 
 Features:
 - Supports investments in multiple currencies with automatic conversion to GBP
-- Add multiple stock investments
 - Tracks current value and profits for each investment
+- Supports multiple stock investments per portfolio
 - Built using Streamlit for responsive web interface
 
 ### Installation
@@ -28,13 +28,13 @@ streamlit run tracker.py
 ```
 ### Usage
 
-1.   Enter the stock ticker, date of investment, and the amount invested in GDP.
+1.   Enter the stock ticker, date of investment, and the amount invested in GBP.
 
 2.   To track another stock for your portfolio, click "➕ Add Another Investment"
    
 3.   Click "Track Portfolio" to calculate current profit/loss and visualize performance.
   
-4.   Use ❌ buttons next to rows to remove any investment to stop tracking it.
+4.   Remove investments dynamically using ❌ buttons next to rows.
 
 ### Future Additions
 
