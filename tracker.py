@@ -4,32 +4,31 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import datetime
+import uuid
 
 st.title("Stock Portfolio Tracker")
 
 if "rows" not in st.session_state:
-    st.session_state.rows = [{"ticker": "", "date": datetime.date.today() , "investment": 0.0}]
+    st.session_state.rows = [{"ticker": "", "date": datetime.date.today() , "investment": 0.0, "id": str(uuid.uuid4())}]
 
 def removeRow(index):
-    st.session_state.rows.pop(index)
-    st.rerun()
+    st.session_state.rows = [row for row in st.session_state.rows if row["id"] != index]
 
 for i, row in enumerate(st.session_state.rows):
     col1, col2, col3, col4 = st.columns([3, 3, 3, 1])
     with col1:
-        row["ticker"] = st.text_input("Enter Stock Ticker (e.g. AAPL)", value=row["ticker"], key = f"ticker_{i}").upper()
+        row["ticker"] = st.text_input("Enter Stock Ticker (e.g. AAPL)", value=row["ticker"], key = f"ticker_{row["id"]}").upper()
     with col2:
-        row["date"] = st.date_input("Investment Date", value=row["date"], key = f"date_{i}")
+        row["date"] = st.date_input("Investment Date", value=row["date"], key = f"date_{row["id"]}")
     with col3:
-        row["investment"] = st.number_input("Initial Investment (£)", min_value=0.0, value=row["investment"], key = f"investment_{i}")
+        row["investment"] = st.number_input("Initial Investment (£)", min_value=0.0, value=row["investment"], key = f"investment_{row["id"]}")
     with col4:
-        if st.button("❌", key=f"delete_{i}"):
-            removeRow(i)
-            
-
+        if st.button("❌", key=f"delete_{row["id"]}"):
+            removeRow(row["id"])
+            st.rerun()
 
 def addRow():
-    st.session_state.rows.append({"ticker": "", "date": datetime.date.today() , "investment": 0.0})
+    st.session_state.rows.append({"ticker": "", "date": datetime.date.today() , "investment": 0.0, "id": str(uuid.uuid4())})
 
 def toGBP(amount, currency):
     if currency == "GBP":
